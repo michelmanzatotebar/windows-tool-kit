@@ -1,0 +1,13 @@
+{
+  "name": "windows-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interface local para executar as ferramentas BAT do Windows Toolkit.",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\start-admin.ps1"
+  },
+  "devDependencies": {
+    "electron": "^45.1.0"
+  }
+}

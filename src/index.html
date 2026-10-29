@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;"
+    >
+    <title>Windows Toolkit</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./renderer.js" defer></script>
+</head>
+<body>
+    <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="icon-shield-check" viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m8.5 12 2.3 2.3 4.8-4.8"/></symbol>
+        <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></symbol>
+        <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 0 0 6.4-6.4L14 13l-3-3 3.7-3.7Z"/><path d="m14 14 6 6"/></symbol>
+        <symbol id="icon-network" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8v3m4-3v3m4-3v3m4-3v3M8 16h8m-6-2v2m4-2v2"/></symbol>
+        <symbol id="icon-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z"/></symbol>
+        <symbol id="icon-wifi-off" viewBox="0 0 24 24"><path d="M3 8a15 15 0 0 1 18 0M5 12a10 10 0 0 1 8-2m4 2 4 0M8.5 16a5 5 0 0 1 4-1.5M12 20h.01M3 3l18 18"/></symbol>
+        <symbol id="icon-sliders" viewBox="0 0 24 24"><path d="M4 6h6m4 0h6M4 12h2m4 0h10M4 18h8m4 0h4"/><circle cx="12" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="14" cy="18" r="2"/></symbol>
+        <symbol id="icon-store" viewBox="0 0 24 24"><path d="M3 10h18l-2-6H5l-2 6Zm1 0v10h16V10M4 14a3 3 0 0 0 5 2 3 3 0 0 0 5 0 3 3 0 0 0 5-2M9 20v-5h6v5"/></symbol>
+        <symbol id="icon-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="5"/><path d="m11.5 11.5 8-8L22 6l-2 2 2 2-3 3-2-2-2 2"/></symbol>
+        <symbol id="icon-cloud-off" viewBox="0 0 24 24"><path d="M5 5a8 8 0 0 1 14 5 4 4 0 0 1 1 7M3 12a5 5 0 0 1 5-5m-5-4 18 18M8 19h8"/></symbol>
+        <symbol id="icon-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2H8a2 2 0 0 0-1.8 1.1L3 18V6Zm5 5h13l-3 8H4l4-8Z"/></symbol>
+        <symbol id="icon-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3"/></symbol>
+        <symbol id="icon-unlock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.7-1.5M12 14v3"/></symbol>
+        <symbol id="icon-wifi" viewBox="0 0 24 24"><path d="M3 8a15 15 0 0 1 18 0M6 12a10 10 0 0 1 12 0m-9 4a5 5 0 0 1 6 0m-3 4h.01"/></symbol>
+        <symbol id="icon-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3 9 9 0 0 0-9-9Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="11" cy="7" r="1"/><circle cx="16" cy="8.5" r="1"/></symbol>
+        <symbol id="icon-cloud-check" viewBox="0 0 24 24"><path d="M7 18H6a4 4 0 1 1 1-7.9A7 7 0 0 1 20 12a3 3 0 0 1-1 5.8h-2"/><path d="m9 17 2 2 4-4"/></symbol>
+    </svg>
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">W</span>
+            <span>Windows <strong>Toolkit</strong></span>
+        </div>
+
+        <div class="menu-label">FERRAMENTAS</div>
+
+        <nav>
+            <a href="#aplicar" class="nav-item active" data-target="aplicar">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg></span>
+                Aplicar scripts de bloqueio
+            </a>
+
+            <a href="#wallpaper" class="nav-item" data-target="wallpaper">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-image"></use></svg></span>
+                Definir papel de parede
+            </a>
+
+            <a href="#limpeza" class="nav-item" data-target="limpeza">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-trash"></use></svg></span>
+                Limpeza
+            </a>
+
+            <a href="#reparar" class="nav-item" data-target="reparar">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-tools"></use></svg></span>
+                Reparar sistema
+            </a>
+
+            <a href="#rede" class="nav-item" data-target="rede">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-network"></use></svg></span>
+                Configuração de rede
+            </a>
+
+            <a href="#reverter" class="nav-item" data-target="reverter">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-undo"></use></svg></span>
+                Reverter scripts de bloqueio
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status-dot"></span>
+            Ferramentas locais
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Aplicar scripts de bloqueio</h1>
+                <p id="page-description">
+                    Aplicar políticas e configurações do Windows.
+                </p>
+            </div>
+
+            <span class="version">v1.0.0</span>
+        </header>
+
+        <div class="pages">
+
+            <!-- APLICAR SCRIPTS -->
+            <section class="tool-section tool-page" data-page="aplicar">
+                <h2>Aplicar scripts</h2>
+
+                <div class="tool-list">
+                    <article class="tool-card featured">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-play"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Executar todos os scripts</h3>
+                            <p>Executa as rotinas de bloqueio em lote.</p>
+                        </div>
+                        <button class="btn-primary">Executar</button>
+                    </article>
+
+            <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-wifi-off"></use></svg></div>
+                        <div class="tool-info">
+                    <h3>Bloquear rede Wi-Fi</h3>
+                    <p>Informar o nome da rede que deseja bloquear.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sliders"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Bloquear personalização</h3>
+                            <p>Aplicar restrições de personalização.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-store"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Bloquear Microsoft Store</h3>
+                            <p>Aplicar restrições à Microsoft Store.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-key"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Controle de senhas</h3>
+                            <p>Aplicar configurações de controle de senha.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-cloud-off"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Desativar arquivos offline e backup</h3>
+                            <p>Aplicar as configurações previstas no script.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- PAPEL DE PAREDE -->
+            <section class="tool-section tool-page" data-page="wallpaper" hidden>
+                <h2>Definir papel de parede</h2>
+                <div class="tool-list">
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-image"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Aplicar papel de parede</h3>
+                            <p>Escolher uma imagem da pasta wallpaper e aplicar como tema.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-folder"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Adicionar papéis de parede</h3>
+                            <p>Abrir a pasta onde você pode colocar suas imagens.</p>
+                        </div>
+                        <button id="open-wallpaper-folder">Abrir pasta wallpaper</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- LIMPEZA -->
+            <section class="tool-section tool-page" data-page="limpeza" hidden>
+                <h2>Limpeza</h2>
+
+                <div class="tool-list">
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-trash"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Esvaziar lixeira</h3>
+                            <p>Executar rotina de limpeza da lixeira.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- REPARAÇÃO -->
+            <section class="tool-section tool-page" data-page="reparar" hidden>
+                <h2>Reparar sistema</h2>
+
+                <div class="tool-list">
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-tools"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Reparar Windows</h3>
+                            <p>Executar a rotina de reparação do sistema.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- REDE -->
+            <section class="tool-section tool-page" data-page="rede" hidden>
+                <h2>Configuração de rede</h2>
+
+                <div class="tool-list">
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-repeat"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Resetar configuração de rede</h3>
+                            <p>Executar a rotina de redefinição de rede.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-network"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Configurar IP e DNS do adaptador</h3>
+                            <p>Definir IP fixo ou retornar IP e DNS ao DHCP no adaptador escolhido.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- REVERTER -->
+            <section class="tool-section tool-page" data-page="reverter" hidden>
+                <h2>Reverter scripts de bloqueio</h2>
+
+                <div class="tool-list">
+                    <article class="tool-card featured">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-unlock"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Reverter todos os scripts</h3>
+                            <p>Executa a rotina de reversão em lote.</p>
+                        </div>
+                        <button class="btn-primary">Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-wifi"></use></svg></div>
+                        <div class="tool-info">
+                    <h3>Desbloquear rede Wi-Fi</h3>
+                    <p>Informar o nome da rede que deseja desbloquear.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-palette"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Desbloquear personalização</h3>
+                            <p>Reverter as restrições de personalização.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-store"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Desbloquear Microsoft Store</h3>
+                            <p>Reverter as restrições da loja.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-key"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Desbloquear controle de senhas</h3>
+                            <p>Restaurar as configurações previstas no script.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-cloud-check"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Reativar arquivos offline</h3>
+                            <p>Reverter as configurações aplicadas.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+                </div>
+            </section>
+
+        </div>
+
+        <div
+            class="terminal-resize-handle"
+            id="terminal-resize-handle"
+            role="separator"
+            aria-orientation="horizontal"
+            aria-label="Redimensionar console"
+            aria-valuemin="150"
+            aria-valuenow="205"
+            tabindex="0"
+        ></div>
+
+        <!-- CONSOLE REDIMENSIONAVEL -->
+        <section class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">
+                    <span class="terminal-icon">&gt;_</span>
+                    <span>Console</span>
+                </div>
+
+                <span class="terminal-state">
+                    <span class="status-dot"></span>
+                    Aguardando execução
+                </span>
+            </div>
+
+            <div class="terminal-body" id="console-output" aria-live="polite">
+                <p>
+                    <span class="prompt">&gt;</span>
+                    Windows Toolkit iniciado.
+                </p>
+                <p class="console-muted">
+                    Selecione uma ferramenta para começar.
+                </p>
+            </div>
+
+            <form class="terminal-input-row" id="console-input-form">
+                <label class="sr-only" for="console-input">Resposta para o script</label>
+                <input
+                    id="console-input"
+                    type="text"
+                    placeholder="Digite aqui para responder ao script..."
+                    autocomplete="off"
+                    disabled
+                >
+                <button id="console-send" type="submit" disabled>Enviar</button>
+            </form>
+
+            <div class="terminal-footer">
+                <span>WINDOWS TOOLKIT</span>
+                <span id="console-status">PRONTO</span>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
