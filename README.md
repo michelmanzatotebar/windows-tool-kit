@@ -63,9 +63,7 @@ Depois de instalar as dependências com `npm.cmd install`, execute:
 npm.cmd run dist
 ```
 
-O Electron Builder cria os dois arquivos de 64 bits na pasta `artifacts`:
 
 - `Windows Toolkit-1.0.0-Setup.exe`: instalador do Windows.
 - `Windows Toolkit-1.0.0-Portable.exe`: versão portátil, sem instalação.
 
-Os dois aplicativos pedem permissão de administrador ao iniciar para que as ferramentas continuem executando as BATs elevadas pelo console do programa. Para publicar, crie um Release no GitHub e anexe os dois executáveis gerados em `artifacts`.
