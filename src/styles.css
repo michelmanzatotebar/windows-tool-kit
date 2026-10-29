@@ -139,12 +139,59 @@ nav {
     font-size: 16px;
 }
 
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid #252b41;
+}
+
+.sidebar-credits {
+    display: grid;
+    gap: 5px;
+    padding: 0 5px 9px;
+}
+
+.credit-label {
+    color: #647187;
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+.credit-name {
+    color: #c9d5e8;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.credit-links {
+    display: flex;
+    gap: 12px;
+    font-size: 10px;
+}
+
+.credit-links a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color .18s;
+}
+
+.credit-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.credit-links a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+
 .sidebar-footer {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: auto;
-    padding: 12px 5px;
+    padding: 8px 5px 2px;
 
     color: var(--muted);
     font-size: 11px;
@@ -604,7 +651,7 @@ button:focus-visible,
     }
 
     .menu-label,
-    .sidebar-footer {
+    .sidebar-bottom {
         display: none;
     }
 

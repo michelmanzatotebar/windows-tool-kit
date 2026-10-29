@@ -53,6 +53,17 @@ function createWindow() {
     }
   });
 
+  const allowedExternalUrls = new Set([
+    'https://github.com/michelmanzatotebar',
+    'https://www.linkedin.com/in/michel-manzato-tebar/'
+  ]);
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    if (allowedExternalUrls.has(url)) {
+      shell.openExternal(url).catch((error) => console.error('N\u00e3o foi poss\u00edvel abrir o link externo:', error));
+    }
+    return { action: 'deny' };
+  });
+
   window.loadFile(path.join(__dirname, 'src', 'index.html'));
 }
 
