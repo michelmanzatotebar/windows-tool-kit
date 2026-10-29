@@ -5,9 +5,59 @@
   "description": "Interface local para executar as ferramentas BAT do Windows Toolkit.",
   "main": "main.cjs",
   "scripts": {
-    "start": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\start-admin.ps1"
+    "start": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\start-admin.ps1",
+    "dist": "electron-builder --win"
   },
   "devDependencies": {
-    "electron": "^45.1.0"
+    "electron": "^45.1.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.michelmanzato.windowsToolkit",
+    "productName": "Windows Toolkit",
+    "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "src/**/*"
+    ],
+    "extraResources": [
+      { "from": "Aplicar scripts", "to": "Aplicar scripts", "filter": ["**/*"] },
+      { "from": "Papel de parede", "to": "Papel de parede", "filter": ["**/*"] },
+      { "from": "config de rede", "to": "config de rede", "filter": ["**/*"] },
+      { "from": "lixeira limpar", "to": "lixeira limpar", "filter": ["**/*"] },
+      { "from": "reparar sistema", "to": "reparar sistema", "filter": ["**/*"] },
+      { "from": "Reverter scripts", "to": "Reverter scripts", "filter": ["**/*"] }
+    ],
+    "directories": {
+      "output": "artifacts"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "${productName}-${version}-Setup.${ext}"
+    },
+    "portable": {
+      "requestExecutionLevel": "admin",
+      "artifactName": "${productName}-${version}-Portable.${ext}"
+    }
   }
 }

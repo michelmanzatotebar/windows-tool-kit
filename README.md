@@ -54,3 +54,18 @@ npm.cmd start
 Na seção **Configuração de rede**, a ferramenta **Configurar IP e DNS do adaptador** lista as placas de rede e permite definir IP fixo ou habilitar DHCP para IP, DNS ou ambos. Cada alteração pede confirmação e afeta somente o adaptador selecionado. Em uma placa Wi-Fi, a configuração fixa vale para essa placa em qualquer rede Wi-Fi conectada.
 
 A opção **Definir papel de parede** fica separada dos scripts de bloqueio e do processamento em lote. Nela, use **Abrir pasta wallpaper** para adicionar imagens antes de executar o script.
+
+## Criar os arquivos para distribuir
+
+Depois de instalar as dependências com `npm.cmd install`, execute:
+
+```powershell
+npm.cmd run dist
+```
+
+O Electron Builder cria os dois arquivos de 64 bits na pasta `artifacts`:
+
+- `Windows Toolkit-1.0.0-Setup.exe`: instalador do Windows.
+- `Windows Toolkit-1.0.0-Portable.exe`: versão portátil, sem instalação.
+
+Os dois aplicativos pedem permissão de administrador ao iniciar para que as ferramentas continuem executando as BATs elevadas pelo console do programa. Para publicar, crie um Release no GitHub e anexe os dois executáveis gerados em `artifacts`.

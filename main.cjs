@@ -34,6 +34,10 @@ const allowedScripts = new Set([
 
 let activeProcess = null;
 
+function getScriptsRoot() {
+  return app.isPackaged ? process.resourcesPath : app.getAppPath();
+}
+
 function createWindow() {
   const window = new BrowserWindow({
     width: 1200,
@@ -62,8 +66,9 @@ function sendOutput(sender, stream, decoder, chunk, final = false) {
 }
 
 ipcMain.handle('folder:open-wallpaper', async () => {
-  const folderPath = path.resolve(app.getAppPath(), 'Papel de parede', 'wallpaper');
-  if (!folderPath.startsWith(`${app.getAppPath()}${path.sep}`) || !fs.existsSync(folderPath)) {
+  const scriptsRoot = getScriptsRoot();
+  const folderPath = path.resolve(scriptsRoot, 'Papel de parede', 'wallpaper');
+  if (!folderPath.startsWith(`${scriptsRoot}${path.sep}`) || !fs.existsSync(folderPath)) {
     throw new Error('Pasta wallpaper não encontrada.');
   }
   const error = await shell.openPath(folderPath);
@@ -77,9 +82,9 @@ ipcMain.handle('bat:run', async (event, relativePath) => {
     throw new Error('Script não autorizado.');
   }
 
-  const appRoot = app.getAppPath();
-  const batPath = path.resolve(appRoot, relativePath);
-  if (!batPath.startsWith(`${appRoot}${path.sep}`) || !fs.existsSync(batPath)) {
+  const scriptsRoot = getScriptsRoot();
+  const batPath = path.resolve(scriptsRoot, relativePath);
+  if (!batPath.startsWith(`${scriptsRoot}${path.sep}`) || !fs.existsSync(batPath)) {
     throw new Error(`Arquivo BAT não encontrado: ${relativePath}`);
   }
 
