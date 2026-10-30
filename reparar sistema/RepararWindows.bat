@@ -77,5 +77,4 @@ echo ========================================
 echo.
 echo Recomenda-se reiniciar o computador.
 echo.
-pause
 exit /b

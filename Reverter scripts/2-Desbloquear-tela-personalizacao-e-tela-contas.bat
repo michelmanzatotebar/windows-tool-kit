@@ -33,4 +33,3 @@ taskkill /f /im SystemSettings.exe >nul 2>&1
 
 
 echo O usuario precisa desconectar para aplicar as alteracoes.
-pause

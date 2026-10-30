@@ -38,4 +38,3 @@ taskkill /f /im SystemSettings.exe >nul 2>&1
 
 :: Faz logoff para aplicar tudo
 echo O usuario precisa desconectado para aplicar as alteracoes.
-pause

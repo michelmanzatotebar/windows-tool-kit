@@ -32,4 +32,3 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" /v KFMBlockOptIn /t REG_DWOR
 
 echo.
 echo Pronto! Reinicie a maquina para aplicar as alteracoes.
-pause

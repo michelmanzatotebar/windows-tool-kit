@@ -10,7 +10,6 @@ $isAdmin = ([Security.Principal.WindowsPrincipal]::new(
 if (-not $isAdmin) {
     Write-Host ''
     Write-Host 'ERRO: execute este script como Administrador.' -ForegroundColor Red
-    Read-Host 'Pressione Enter para sair' | Out-Null
     exit 1
 }
 
@@ -18,7 +17,6 @@ $wallpaperFolder = Join-Path (Split-Path -Parent $PSScriptRoot) 'wallpaper'
 if (-not (Test-Path -LiteralPath $wallpaperFolder -PathType Container)) {
     Write-Host ''
     Write-Host "Pasta de imagens nao encontrada: $wallpaperFolder" -ForegroundColor Red
-    Read-Host 'Pressione Enter para sair' | Out-Null
     exit 1
 }
 $supportedExtensions = @('.jpg', '.jpeg', '.png', '.bmp')
@@ -32,7 +30,6 @@ if ($images.Count -eq 0) {
     Write-Host ''
     Write-Host "Nenhuma imagem encontrada em: $wallpaperFolder" -ForegroundColor Yellow
     Write-Host 'Adicione um arquivo JPG, JPEG, PNG ou BMP a essa pasta e tente novamente.'
-    Read-Host 'Pressione Enter para sair' | Out-Null
     exit 1
 }
 
@@ -48,7 +45,6 @@ Write-Host ''
 $selection = Read-Host 'Digite o numero da imagem'
 if ($selection -notmatch '^\d+$' -or [int]$selection -eq 0 -or [int]$selection -gt $images.Count) {
     Write-Host 'Selecao invalida ou cancelada. Nenhuma alteracao foi feita.' -ForegroundColor Yellow
-    Read-Host 'Pressione Enter para sair' | Out-Null
     exit 1
 }
 
@@ -74,7 +70,6 @@ Write-Host ''
 $colorSelection = Read-Host 'Digite o numero da cor'
 if ($colorSelection -notmatch '^\d+$' -or [int]$colorSelection -eq 0 -or [int]$colorSelection -gt $colors.Count) {
     Write-Host 'Selecao invalida ou cancelada. Nenhuma alteracao foi feita.' -ForegroundColor Yellow
-    Read-Host 'Pressione Enter para sair' | Out-Null
     exit 1
 }
 
@@ -160,4 +155,3 @@ Write-Host 'Tema criado e aplicado.' -ForegroundColor Green
 Write-Host "Imagem: $($image.Name)"
 Write-Host "Cor: $($color.Name)"
 Write-Host "Arquivo do tema: $themePath"
-Read-Host 'Pressione Enter para fechar' | Out-Null

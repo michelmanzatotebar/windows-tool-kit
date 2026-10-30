@@ -78,7 +78,6 @@ net user "%USUARIO%" >nul 2>&1
 if errorlevel 1 (
     echo.
     echo Usuario nao encontrado.
-    pause
     exit /b
 )
 
@@ -96,7 +95,6 @@ echo ==========================================
 choice /c SN /m "Aplicar bloqueio nesta conta"
 if errorlevel 2 (
     echo Operacao cancelada.
-    pause
     exit /b
 )
 
@@ -142,4 +140,3 @@ echo.
 echo Todos os scripts aplicados com sucesso.
 echo Reinicie a maquina para aplicar as alteracoes.
 echo.
-pause

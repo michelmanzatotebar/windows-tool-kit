@@ -14,5 +14,10 @@ contextBridge.exposeInMainWorld('batRunner', {
     const listener = (_event, result) => callback(result);
     ipcRenderer.on('bat:finished', listener);
     return () => ipcRenderer.removeListener('bat:finished', listener);
+  },
+  onRepairCloseBlocked: (callback) => {
+    const listener = () => callback();
+    ipcRenderer.on('repair:close-blocked', listener);
+    return () => ipcRenderer.removeListener('repair:close-blocked', listener);
   }
 });

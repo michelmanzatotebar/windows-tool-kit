@@ -20,4 +20,3 @@ reg delete "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" /v KFMBlockOptIn /t REG_D
 
 echo.
 echo Pronto! Reinicie a maquina para aplicar as alteracoes.
-pause

@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const consoleInput = document.getElementById("console-input");
     const consoleSend = document.getElementById("console-send");
     const cancelExecutionButton = document.getElementById("cancel-execution");
+    const repairOverlay = document.getElementById("repair-running-overlay");
+    const repairOverlayDismiss = document.getElementById("repair-dialog-dismiss");
     const runner = window.batRunner;
     const terminal = document.querySelector(".terminal");
     const resizeHandle = document.getElementById("terminal-resize-handle");
@@ -76,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", () => setTerminalHeight(terminal.getBoundingClientRect().height, false));
 
     const pageInfo = {
+        inicio: { title: "Início", description: "Acesse as ferramentas do Windows Toolkit." },
         aplicar: { title: "Aplicar scripts", description: "Aplicar políticas e configurações do Windows." },
         wallpaper: { title: "Definir papel de parede", description: "Escolher uma imagem, criar e aplicar o tema do Windows." },
         limpeza: { title: "Limpeza", description: "Executar rotinas de limpeza." },
@@ -86,12 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const scriptsPorCategoria = {
         aplicar: [
-            "Aplicar scripts/1-Executar-todos-os-scripts.bat",
             "Aplicar scripts/2-bloquear-Wifi.bat",
             "Aplicar scripts/3-bloqueio-tela-personalizacao-e-tela-contas.bat",
             "Aplicar scripts/4-Bloquear-microsoft-store.bat",
             "Aplicar scripts/5-Aplicar-Control-de-senha.bat",
-            "Aplicar scripts/6-Desativar-Arquivos-offline-e-backup.bat"
+            "Aplicar scripts/6-Desativar-Arquivos-offline-e-backup.bat",
+            "Aplicar scripts/1-Executar-todos-os-scripts.bat"
         ],
         wallpaper: ["Papel de parede/0-Definir-papel-de-parede-padrao.bat"],
         limpeza: [
@@ -101,12 +104,12 @@ document.addEventListener("DOMContentLoaded", () => {
         reparar: ["reparar sistema/RepararWindows.bat"],
         rede: ["config de rede/ipReset.bat", "config de rede/Configurar-IP.bat"],
         reverter: [
-            "Reverter scripts/Reativar-Desbloquear-todos-scripts.bat",
             "Reverter scripts/1-Desbloquear-wifi.bat",
             "Reverter scripts/2-Desbloquear-tela-personalizacao-e-tela-contas.bat",
             "Reverter scripts/3-Desbloquear-microsoft-store.bat",
             "Reverter scripts/4-Desbloquear-controle-de-senhas.bat",
-            "Reverter scripts/5-Reativar-Arquivos-offline.bat"
+            "Reverter scripts/5-Reativar-Arquivos-offline.bat",
+            "Reverter scripts/Reativar-Desbloquear-todos-scripts.bat"
         ]
     };
 
@@ -170,12 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         running = true;
+        const isRepairScript = relativePath === "reparar sistema/RepararWindows.bat";
         consoleOutput.replaceChildren();
         consoleInput.value = "";
         button.disabled = true;
         button.textContent = "Executando…";
-        const isNonCancellable = relativePath === "reparar sistema/RepararWindows.bat";
-        cancelExecutionButton.hidden = isNonCancellable;
+        cancelExecutionButton.hidden = isRepairScript;
         cancelExecutionButton.disabled = false;
         cancelExecutionButton.textContent = "Cancelar execução";
         consoleInput.disabled = false;
@@ -183,6 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
         consoleStatus.textContent = "EXECUTANDO";
         terminalState.lastChild.textContent = ` Executando ${scriptName}`;
         writeConsole(`Iniciando ${scriptName}`);
+        if (isRepairScript) {
+            showRepairWarning();
+        }
 
         try {
             const result = await run(relativePath);
@@ -213,7 +219,25 @@ document.addEventListener("DOMContentLoaded", () => {
             cancelExecutionButton.textContent = "Cancelar execução";
             button.disabled = false;
             button.textContent = "Executar";
+            if (isRepairScript) repairOverlay.hidden = true;
         }
+    }
+
+    function showRepairWarning() {
+        repairOverlay.hidden = false;
+        repairOverlayDismiss.focus();
+    }
+
+    repairOverlayDismiss.addEventListener("click", () => {
+        repairOverlay.hidden = true;
+        consoleInput.focus();
+    });
+
+    if (runner && typeof runner.onRepairCloseBlocked === "function") {
+        runner.onRepairCloseBlocked(() => {
+            showRepairWarning();
+            writeConsole("O aplicativo não pode ser fechado enquanto a reparação do Windows estiver em andamento.", "console-muted");
+        });
     }
 
     cancelExecutionButton.addEventListener("click", async () => {
@@ -271,6 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    document.querySelectorAll("[data-open-page]").forEach((button) => {
+        button.addEventListener("click", () => showPage(button.dataset.openPage));
+    });
+
     window.addEventListener("resize", () => {
         const activeMenuItem = document.querySelector(".nav-item.active");
         if (activeMenuItem && window.matchMedia("(max-width: 700px)").matches) {
@@ -278,5 +306,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    showPage("aplicar");
+    showPage("inicio");
 });
