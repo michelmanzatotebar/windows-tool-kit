@@ -17,7 +17,7 @@ echo.
 set /p "SSID=Digite o nome exato da rede Wi-Fi que deseja desbloquear: "
 if not defined SSID (
     echo Nenhum nome informado. Operacao cancelada.
-    pause
+
     exit /b 1
 )
 
@@ -26,10 +26,10 @@ echo Removendo o bloqueio da rede "%SSID%"...
 netsh wlan delete filter permission=block ssid="%SSID%" networktype=infrastructure
 if errorlevel 1 (
     echo Nao foi possivel remover o bloqueio. Verifique o nome e tente novamente.
-    pause
+
     exit /b 1
 )
 
 echo Bloqueio removido para "%SSID%".
-pause
+
 exit /b 0

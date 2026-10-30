@@ -29,7 +29,6 @@ net user "%USUARIO%" >nul 2>&1
 if errorlevel 1 (
     echo.
     echo Usuario nao encontrado.
-    pause
     exit /b
 )
 
@@ -51,7 +50,6 @@ choice /c SN /m "Aplicar bloqueio nesta conta"
 if errorlevel 2 (
     echo.
     echo Operacao cancelada.
-    pause
     exit /b
 )
 
@@ -87,4 +85,3 @@ reg add "HKCR\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v Syste
 echo.
 echo Bloqueios aplicados com sucesso.
 echo O usuario precisa desconectar para aplicar as alteracoes.
-pause

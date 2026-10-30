@@ -32,6 +32,7 @@
         <symbol id="icon-wifi" viewBox="0 0 24 24"><path d="M3 8a15 15 0 0 1 18 0M6 12a10 10 0 0 1 12 0m-9 4a5 5 0 0 1 6 0m-3 4h.01"/></symbol>
         <symbol id="icon-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3 9 9 0 0 0-9-9Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="11" cy="7" r="1"/><circle cx="16" cy="8.5" r="1"/></symbol>
         <symbol id="icon-cloud-check" viewBox="0 0 24 24"><path d="M7 18H6a4 4 0 1 1 1-7.9A7 7 0 0 1 20 12a3 3 0 0 1-1 5.8h-2"/><path d="m9 17 2 2 4-4"/></symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-6h-4v6H4a1 1 0 0 1-1-1V10Z"/></symbol>
     </svg>
     <aside class="sidebar">
         <div class="brand">
@@ -42,9 +43,19 @@
         <div class="menu-label">FERRAMENTAS</div>
 
         <nav>
-            <a href="#aplicar" class="nav-item active" data-target="aplicar">
+            <a href="#inicio" class="nav-item active" data-target="inicio">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-home"></use></svg></span>
+                Início
+            </a>
+
+            <a href="#aplicar" class="nav-item" data-target="aplicar">
                 <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg></span>
                 Aplicar scripts de bloqueio
+            </a>
+
+            <a href="#reverter" class="nav-item" data-target="reverter">
+                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-undo"></use></svg></span>
+                Reverter scripts de bloqueio
             </a>
 
             <a href="#wallpaper" class="nav-item" data-target="wallpaper">
@@ -67,10 +78,6 @@
                 Configuração de rede
             </a>
 
-            <a href="#reverter" class="nav-item" data-target="reverter">
-                <span class="nav-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-undo"></use></svg></span>
-                Reverter scripts de bloqueio
-            </a>
         </nav>
 
         <div class="sidebar-bottom">
@@ -92,10 +99,8 @@
     <main class="content">
         <header class="topbar">
             <div>
-                <h1 id="page-title">Aplicar scripts de bloqueio</h1>
-                <p id="page-description">
-                    Aplicar políticas e configurações do Windows.
-                </p>
+                <h1 id="page-title">Início</h1>
+                <p id="page-description">Acesse as ferramentas do Windows Toolkit.</p>
             </div>
 
             <span class="version">v1.0.0</span>
@@ -103,8 +108,23 @@
 
         <div class="pages">
 
+            <!-- INICIO -->
+            <section class="tool-section tool-page" data-page="inicio">
+                <div class="welcome-panel">
+                    <span class="welcome-kicker">WINDOWS TOOLKIT</span>
+                    <h2>Bem-vindo</h2>
+                    <p>Escolha uma categoria no menu lateral para consultar e executar uma ferramenta. Nenhum script é iniciado automaticamente.</p>
+                </div>
+                <div class="home-shortcuts">
+                    <button type="button" data-open-page="aplicar">Aplicar scripts de bloqueio</button>
+                    <button type="button" data-open-page="limpeza">Limpeza</button>
+                    <button type="button" data-open-page="rede">Configuração de rede</button>
+                    <button type="button" data-open-page="reparar">Reparar sistema</button>
+                </div>
+            </section>
+
             <!-- APLICAR SCRIPTS -->
-            <section class="tool-section tool-page" data-page="aplicar">
+            <section class="tool-section tool-page" data-page="aplicar" hidden>
                 <h2>Aplicar scripts</h2>
 
                 <aside class="warning-banner" role="note" aria-label="Aviso ao aplicar scripts de bloqueio">
@@ -113,15 +133,6 @@
                 </aside>
 
                 <div class="tool-list">
-                    <article class="tool-card featured">
-                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-play"></use></svg></div>
-                        <div class="tool-info">
-                            <h3>Executar todos os scripts</h3>
-                            <p>Executa as rotinas de bloqueio em lote.</p>
-                        </div>
-                        <button class="btn-primary">Executar</button>
-                    </article>
-
             <article class="tool-card">
                         <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-wifi-off"></use></svg></div>
                         <div class="tool-info">
@@ -163,6 +174,15 @@
                         <div class="tool-info">
                             <h3>Desativar arquivos offline e backup</h3>
                             <p>Aplicar as configurações previstas no script.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card batch-action-secondary">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-play"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Executar todos os scripts</h3>
+                            <p>Executa as rotinas de bloqueio em lote.</p>
                         </div>
                         <button>Executar</button>
                     </article>
@@ -266,15 +286,6 @@
                 <h2>Reverter scripts de bloqueio</h2>
 
                 <div class="tool-list">
-                    <article class="tool-card featured">
-                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-unlock"></use></svg></div>
-                        <div class="tool-info">
-                            <h3>Reverter todos os scripts</h3>
-                            <p>Executa a rotina de reversão em lote.</p>
-                        </div>
-                        <button class="btn-primary">Executar</button>
-                    </article>
-
                     <article class="tool-card">
                         <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-wifi"></use></svg></div>
                         <div class="tool-info">
@@ -316,6 +327,15 @@
                         <div class="tool-info">
                             <h3>Reativar arquivos offline</h3>
                             <p>Reverter as configurações aplicadas.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
+
+                    <article class="tool-card batch-action-secondary">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-unlock"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Reverter todos os scripts</h3>
+                            <p>Executa a rotina de reversão em lote.</p>
                         </div>
                         <button>Executar</button>
                     </article>
@@ -378,5 +398,14 @@
             </div>
         </section>
     </main>
+
+    <div class="repair-overlay" id="repair-running-overlay" hidden>
+        <section class="repair-dialog" role="alertdialog" aria-modal="true" aria-labelledby="repair-dialog-title" aria-describedby="repair-dialog-description">
+            <span class="repair-dialog-icon" aria-hidden="true">!</span>
+            <h2 id="repair-dialog-title">Reparação do Windows em andamento</h2>
+            <p id="repair-dialog-description">Não feche o aplicativo nem interrompa este processo. Aguarde a conclusão da verificação e do reparo do sistema.</p>
+            <button class="btn-primary" id="repair-dialog-dismiss" type="button">Entendi, continuar acompanhando</button>
+        </section>
+    </div>
 </body>
 </html>

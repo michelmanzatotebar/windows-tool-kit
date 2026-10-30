@@ -18,7 +18,7 @@ echo.
 set /p "SSID=Digite o nome exato da rede Wi-Fi que deseja bloquear: "
 if not defined SSID (
     echo Nenhum nome informado. Operacao cancelada.
-    pause
+
     exit /b 1
 )
 
@@ -27,10 +27,10 @@ echo Bloqueando a rede "%SSID%"...
 netsh wlan add filter permission=block ssid="%SSID%" networktype=infrastructure
 if errorlevel 1 (
     echo Nao foi possivel adicionar o bloqueio. Verifique o nome e tente novamente.
-    pause
+
     exit /b 1
 )
 
 echo Bloqueio aplicado para "%SSID%".
-pause
+
 exit /b 0

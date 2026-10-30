@@ -16,7 +16,6 @@ echo.
 if not exist "%~dp0LimparLixeira.ps1" (
     echo ARQUIVO NAO ENCONTRADO. Conteudo da pasta:
     dir "%~dp0"
-    pause
     exit /b
 )
 
@@ -25,4 +24,3 @@ echo.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0LimparLixeira.ps1"
 echo.
 echo Codigo de saida do PowerShell: %errorlevel%
-pause

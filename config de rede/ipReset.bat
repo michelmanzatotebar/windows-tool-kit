@@ -19,4 +19,3 @@ netsh int ip reset
 netsh winsock reset
 
 echo O usuario precisa reiniciar a maquina para aplicar as alteracoes.
-pause

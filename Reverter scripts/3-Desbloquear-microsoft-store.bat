@@ -21,4 +21,3 @@ reg delete "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v RequirePrivateStor
 reg delete "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v AutoDownload /f
 
 echo O usuario precisa desconectar para aplicar as alteracoes.
-pause

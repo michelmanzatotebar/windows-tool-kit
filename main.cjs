@@ -71,10 +71,7 @@ function createWindow() {
   window.on('close', (event) => {
     if (!activeProcess || activeProcess.sender !== window.webContents || !activeProcess.nonCancellable) return;
     event.preventDefault();
-    window.webContents.send('bat:output', {
-      stream: 'stderr',
-      text: 'A reparacao do Windows esta em andamento. Aguarde a conclusao antes de fechar o aplicativo.'
-    });
+    window.webContents.send('repair:close-blocked');
   });
 
   window.loadFile(path.join(__dirname, 'src', 'index.html'));
@@ -201,10 +198,7 @@ app.on('before-quit', (event) => {
   if (!activeProcess) return;
   if (activeProcess.nonCancellable) {
     event.preventDefault();
-    activeProcess.sender.send('bat:output', {
-      stream: 'stderr',
-      text: 'A reparacao do Windows esta em andamento. Aguarde a conclusao antes de fechar o aplicativo.'
-    });
+    activeProcess.sender.send('repair:close-blocked');
     return;
   }
   terminateProcessTree(activeProcess.child);

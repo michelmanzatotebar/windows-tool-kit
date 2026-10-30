@@ -56,7 +56,6 @@ net user "%USUARIO%" >nul 2>&1
 if errorlevel 1 (
     echo.
     echo Usuario nao encontrado.
-    pause
     exit /b
 )
 
@@ -73,7 +72,6 @@ echo ==========================================
 choice /c SN /m "Remover bloqueios desta conta"
 if errorlevel 2 (
     echo Operacao cancelada.
-    pause
     exit /b
 )
 
@@ -99,4 +97,3 @@ reg delete "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" /v KFMBlockOptIn /t REG_D
 echo.
 echo Todos os bloqueios removidos com sucesso.
 echo Reinicie a maquina para aplicar as alteracoes.
-pause

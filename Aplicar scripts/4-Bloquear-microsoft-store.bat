@@ -28,4 +28,3 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v AutoDownload /t REG_D
 taskkill /f /im WinStore.App.exe >nul 2>&1
 taskkill /f /im OneDrive.exe >nul 2>&1
 echo O usuario precisa desconectar para aplicar as alteracoes.
-pause
