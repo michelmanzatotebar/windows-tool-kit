@@ -21,6 +21,7 @@ const allowedScripts = new Set([
   'Aplicar scripts/5-Aplicar-Control-de-senha.bat',
   'Aplicar scripts/6-Desativar-Arquivos-offline-e-backup.bat',
   'lixeira limpar/ExecLimparLixeira.bat',
+  'limpeza arquivos temporarios/LimparTemporarios.bat',
   'reparar sistema/RepararWindows.bat',
   'config de rede/ipReset.bat',
   'config de rede/Configurar-IP.bat',
@@ -30,6 +31,9 @@ const allowedScripts = new Set([
   'Reverter scripts/3-Desbloquear-microsoft-store.bat',
   'Reverter scripts/4-Desbloquear-controle-de-senhas.bat',
   'Reverter scripts/5-Reativar-Arquivos-offline.bat'
+]);
+const nonCancellableScripts = new Set([
+  'reparar sistema/RepararWindows.bat'
 ]);
 
 let activeProcess = null;
@@ -64,6 +68,15 @@ function createWindow() {
     return { action: 'deny' };
   });
 
+  window.on('close', (event) => {
+    if (!activeProcess || activeProcess.sender !== window.webContents || !activeProcess.nonCancellable) return;
+    event.preventDefault();
+    window.webContents.send('bat:output', {
+      stream: 'stderr',
+      text: 'A reparacao do Windows esta em andamento. Aguarde a conclusao antes de fechar o aplicativo.'
+    });
+  });
+
   window.loadFile(path.join(__dirname, 'src', 'index.html'));
 }
 
@@ -74,6 +87,31 @@ function sendOutput(sender, stream, decoder, chunk, final = false) {
     .replace(/\r(?!\n)/g, '\n')
     .replace(/\x08/g, '');
   if (text) sender.send('bat:output', { stream, text });
+}
+
+function terminateProcessTree(child) {
+  if (!child || !child.pid) return Promise.resolve();
+  if (process.platform !== 'win32') {
+    child.kill();
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    let finished = false;
+    const finish = (fallback = false) => {
+      if (finished) return;
+      finished = true;
+      if (fallback) child.kill();
+      resolve();
+    };
+
+    const killer = spawn('taskkill.exe', ['/PID', String(child.pid), '/T', '/F'], {
+      windowsHide: true,
+      stdio: 'ignore'
+    });
+    killer.once('error', () => finish(true));
+    killer.once('close', () => finish());
+  });
 }
 
 ipcMain.handle('folder:open-wallpaper', async () => {
@@ -110,25 +148,42 @@ ipcMain.handle('bat:run', async (event, relativePath) => {
   });
   const stdoutDecoder = new StringDecoder('utf8');
   const stderrDecoder = new StringDecoder('utf8');
-  activeProcess = { child, sender: event.sender };
+  const processState = {
+    child,
+    sender: event.sender,
+    cancelled: false,
+    nonCancellable: nonCancellableScripts.has(relativePath)
+  };
+  activeProcess = processState;
 
   child.stdout.on('data', (chunk) => sendOutput(event.sender, 'stdout', stdoutDecoder, chunk));
   child.stderr.on('data', (chunk) => sendOutput(event.sender, 'stderr', stderrDecoder, chunk));
 
   return new Promise((resolve, reject) => {
     child.once('error', (error) => {
-      activeProcess = null;
+      if (activeProcess === processState) activeProcess = null;
       reject(error);
     });
 
     child.once('close', (code) => {
       sendOutput(event.sender, 'stdout', stdoutDecoder, undefined, true);
       sendOutput(event.sender, 'stderr', stderrDecoder, undefined, true);
-      activeProcess = null;
-      event.sender.send('bat:finished', { code });
-      resolve({ code });
+      if (activeProcess === processState) activeProcess = null;
+      const result = { code, cancelled: processState.cancelled };
+      event.sender.send('bat:finished', result);
+      resolve(result);
     });
   });
+});
+
+ipcMain.handle('bat:cancel', async (event) => {
+  if (!activeProcess || activeProcess.sender !== event.sender) return { requested: false };
+  if (activeProcess.nonCancellable) throw new Error('Esta rotina de reparacao nao pode ser cancelada pelo aplicativo.');
+  if (activeProcess.cancelled) return { requested: true };
+
+  activeProcess.cancelled = true;
+  await terminateProcessTree(activeProcess.child);
+  return { requested: true };
 });
 
 ipcMain.on('bat:input', (event, input) => {
@@ -142,8 +197,17 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-app.on('before-quit', () => {
-  if (activeProcess) activeProcess.child.kill();
+app.on('before-quit', (event) => {
+  if (!activeProcess) return;
+  if (activeProcess.nonCancellable) {
+    event.preventDefault();
+    activeProcess.sender.send('bat:output', {
+      stream: 'stderr',
+      text: 'A reparacao do Windows esta em andamento. Aguarde a conclusao antes de fechar o aplicativo.'
+    });
+    return;
+  }
+  terminateProcessTree(activeProcess.child);
 });
 
 app.on('window-all-closed', () => {

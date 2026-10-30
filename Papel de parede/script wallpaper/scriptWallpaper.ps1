@@ -14,7 +14,13 @@ if (-not $isAdmin) {
     exit 1
 }
 
-$wallpaperFolder = $PSScriptRoot
+$wallpaperFolder = Join-Path (Split-Path -Parent $PSScriptRoot) 'wallpaper'
+if (-not (Test-Path -LiteralPath $wallpaperFolder -PathType Container)) {
+    Write-Host ''
+    Write-Host "Pasta de imagens nao encontrada: $wallpaperFolder" -ForegroundColor Red
+    Read-Host 'Pressione Enter para sair' | Out-Null
+    exit 1
+}
 $supportedExtensions = @('.jpg', '.jpeg', '.png', '.bmp')
 $images = @(
     Get-ChildItem -LiteralPath $wallpaperFolder -File |

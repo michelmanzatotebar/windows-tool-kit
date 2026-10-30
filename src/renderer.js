@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputForm = document.getElementById("console-input-form");
     const consoleInput = document.getElementById("console-input");
     const consoleSend = document.getElementById("console-send");
+    const cancelExecutionButton = document.getElementById("cancel-execution");
     const runner = window.batRunner;
     const terminal = document.querySelector(".terminal");
     const resizeHandle = document.getElementById("terminal-resize-handle");
@@ -93,7 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "Aplicar scripts/6-Desativar-Arquivos-offline-e-backup.bat"
         ],
         wallpaper: ["Papel de parede/0-Definir-papel-de-parede-padrao.bat"],
-        limpeza: ["lixeira limpar/ExecLimparLixeira.bat"],
+        limpeza: [
+            "lixeira limpar/ExecLimparLixeira.bat",
+            "limpeza arquivos temporarios/LimparTemporarios.bat"
+        ],
         reparar: ["reparar sistema/RepararWindows.bat"],
         rede: ["config de rede/ipReset.bat", "config de rede/Configurar-IP.bat"],
         reverter: [
@@ -166,8 +170,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         running = true;
+        consoleOutput.replaceChildren();
+        consoleInput.value = "";
         button.disabled = true;
         button.textContent = "Executando…";
+        const isNonCancellable = relativePath === "reparar sistema/RepararWindows.bat";
+        cancelExecutionButton.hidden = isNonCancellable;
+        cancelExecutionButton.disabled = false;
+        cancelExecutionButton.textContent = "Cancelar execução";
         consoleInput.disabled = false;
         consoleSend.disabled = false;
         consoleStatus.textContent = "EXECUTANDO";
@@ -176,7 +186,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const result = await run(relativePath);
-            if (result.code === 0) {
+            if (result.cancelled) {
+                writeConsole(`Execução cancelada: ${scriptName}`, "console-muted");
+                consoleStatus.textContent = "CANCELADO";
+                terminalState.lastChild.textContent = " Execução cancelada";
+            } else if (result.code === 0) {
                 writeConsole(`Concluído: ${scriptName}`);
                 consoleStatus.textContent = "CONCLUÍDO";
                 terminalState.lastChild.textContent = " Processo concluído";
@@ -194,10 +208,29 @@ document.addEventListener("DOMContentLoaded", () => {
             running = false;
             consoleInput.disabled = true;
             consoleSend.disabled = true;
+            cancelExecutionButton.hidden = true;
+            cancelExecutionButton.disabled = false;
+            cancelExecutionButton.textContent = "Cancelar execução";
             button.disabled = false;
             button.textContent = "Executar";
         }
     }
+
+    cancelExecutionButton.addEventListener("click", async () => {
+        if (!running || !runner || typeof runner.cancel !== "function") return;
+        cancelExecutionButton.disabled = true;
+        cancelExecutionButton.textContent = "Cancelando…";
+        consoleInput.disabled = true;
+        consoleSend.disabled = true;
+        writeConsole("Solicitando cancelamento da execução...", "console-muted");
+        try {
+            await runner.cancel();
+        } catch (error) {
+            writeConsole(`Falha ao cancelar: ${error instanceof Error ? error.message : String(error)}`, "console-muted");
+            cancelExecutionButton.disabled = false;
+            cancelExecutionButton.textContent = "Tentar cancelar novamente";
+        }
+    });
 
     inputForm.addEventListener("submit", (event) => {
         event.preventDefault();

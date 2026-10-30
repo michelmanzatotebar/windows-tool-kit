@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('batRunner', {
   execute: (relativePath) => ipcRenderer.invoke('bat:run', relativePath),
+  cancel: () => ipcRenderer.invoke('bat:cancel'),
   openWallpaperFolder: () => ipcRenderer.invoke('folder:open-wallpaper'),
   sendInput: (input) => ipcRenderer.send('bat:input', input),
   onOutput: (callback) => {

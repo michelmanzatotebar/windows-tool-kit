@@ -25,6 +25,7 @@
     "extraResources": [
       { "from": "Aplicar scripts", "to": "Aplicar scripts", "filter": ["**/*"] },
       { "from": "Papel de parede", "to": "Papel de parede", "filter": ["**/*"] },
+      { "from": "limpeza arquivos temporarios", "to": "limpeza arquivos temporarios", "filter": ["**/*"] },
       { "from": "config de rede", "to": "config de rede", "filter": ["**/*"] },
       { "from": "lixeira limpar", "to": "lixeira limpar", "filter": ["**/*"] },
       { "from": "reparar sistema", "to": "reparar sistema", "filter": ["**/*"] },

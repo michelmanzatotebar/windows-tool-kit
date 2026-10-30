@@ -280,6 +280,57 @@ nav {
     font-weight: 650;
 }
 
+.warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border: 1px solid rgb(255 193 76 / 42%);
+    border-radius: 8px;
+    background: linear-gradient(110deg, rgb(92 62 17 / 32%), rgb(56 43 20 / 28%));
+    color: #f3d99f;
+}
+
+.warning-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 21px;
+    width: 21px;
+    height: 21px;
+    border: 1px solid rgb(255 193 76 / 75%);
+    border-radius: 50%;
+    color: #ffd166;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.warning-banner p {
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.warning-banner strong {
+    color: #ffd166;
+}
+
+.warning-banner--danger {
+    border-color: rgb(255 86 98 / 48%);
+    background: linear-gradient(110deg, rgb(103 28 38 / 36%), rgb(63 23 35 / 32%));
+    color: #ffc3c8;
+}
+
+.warning-banner--danger .warning-icon {
+    border-color: rgb(255 105 116 / 78%);
+    color: #ff737e;
+}
+
+.warning-banner--danger strong {
+    color: #ff8992;
+}
+
 .tool-list {
     display: grid;
     gap: 8px;
@@ -499,6 +550,28 @@ button:focus-visible,
 
     font-size: 11px;
     font-weight: 600;
+}
+
+.btn-cancel {
+    min-width: 0;
+    padding: 5px 9px;
+    border-color: rgb(255 91 105 / 55%);
+    background: linear-gradient(135deg, #5a202b, #381823);
+    color: #ffdce0;
+    font-size: 10px;
+    letter-spacing: 0;
+}
+
+.btn-cancel:hover:not(:disabled) {
+    border-color: #ff6b78;
+    background: linear-gradient(135deg, #812b38, #54202c);
+    color: #fff;
+    box-shadow: 0 0 14px rgb(255 76 94 / 25%);
+}
+
+.btn-cancel:disabled {
+    cursor: wait;
+    opacity: .75;
 }
 
 .terminal-icon {

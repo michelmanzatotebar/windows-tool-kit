@@ -107,6 +107,11 @@
             <section class="tool-section tool-page" data-page="aplicar">
                 <h2>Aplicar scripts</h2>
 
+                <aside class="warning-banner" role="note" aria-label="Aviso ao aplicar scripts de bloqueio">
+                    <span class="warning-icon" aria-hidden="true">!</span>
+                    <p><strong>Atenção:</strong> scripts de bloqueio podem causar problemas. Confira o que cada um faz e execute um por vez, com cautela.</p>
+                </aside>
+
                 <div class="tool-list">
                     <article class="tool-card featured">
                         <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-play"></use></svg></div>
@@ -200,12 +205,25 @@
                         </div>
                         <button>Executar</button>
                     </article>
+                    <article class="tool-card">
+                        <div class="tool-symbol"><svg class="ui-icon" aria-hidden="true"><use href="#icon-trash"></use></svg></div>
+                        <div class="tool-info">
+                            <h3>Limpar arquivos temporários</h3>
+                            <p>Limpar o conteúdo de Temp do Windows, %temp% e Prefetch. Arquivos em uso podem permanecer.</p>
+                        </div>
+                        <button>Executar</button>
+                    </article>
                 </div>
             </section>
 
             <!-- REPARAÇÃO -->
             <section class="tool-section tool-page" data-page="reparar" hidden>
                 <h2>Reparar sistema</h2>
+
+                <aside class="warning-banner warning-banner--danger" role="alert" aria-label="Aviso importante sobre a reparação do Windows">
+                    <span class="warning-icon" aria-hidden="true">!</span>
+                    <p><strong>Não feche o aplicativo nem interrompa a reparação.</strong> O processo corrige a imagem do Windows; interrompê-lo pode causar problemas no sistema.</p>
+                </aside>
 
                 <div class="tool-list">
                     <article class="tool-card">
@@ -323,6 +341,7 @@
                 <div class="terminal-title">
                     <span class="terminal-icon">&gt;_</span>
                     <span>Console</span>
+                    <button id="cancel-execution" class="btn-cancel" type="button" hidden>Cancelar execução</button>
                 </div>
 
                 <span class="terminal-state">
